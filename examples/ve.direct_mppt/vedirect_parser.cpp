@@ -7,6 +7,8 @@
 
 #include "sensesp.h"
 
+String state[10] = {"Off", "Low power", "Fault", "Bulk", "Absorbtion", "Float", "", "", "", "Inverting"};
+
 bool parse_int(int* value, char* s) {
   int retval = sscanf(s, "%d", value);
   return retval == 1;
@@ -157,6 +159,90 @@ void SentenceParserIL::parse(
   ok &= parse_float(&loadCurrent, buffer + term_offsets[1]);
 
   if (ok) {vedirect_data->loadCurrent.set(loadCurrent / 1000.);}
+}
+
+void SentenceParserH19::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float yieldTotal;
+
+  // e.g. H19<tab>1225
+  ok &= parse_float(&yieldTotal, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->yieldTotal.set(yieldTotal);}
+}
+
+void SentenceParserH20::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float yieldToday;
+
+  // e.g. H20<tab>3
+  ok &= parse_float(&yieldToday, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->yieldToday.set(yieldToday);}
+}
+
+void SentenceParserH21::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float maximumPowerToday;
+
+  // e.g. H21<tab>9
+  ok &= parse_float(&maximumPowerToday, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->maximumPowerToday.set(maximumPowerToday);}
+}
+
+void SentenceParserH22::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float yieldYesterday;
+
+  // e.g. H22<tab>6
+  ok &= parse_float(&yieldYesterday, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->yieldYesterday.set(yieldYesterday);}
+}
+
+void SentenceParserH23::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float maximumPowerYesterday;
+
+  // e.g. H23<tab>25
+  ok &= parse_float(&maximumPowerYesterday, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->maximumPowerYesterday.set(maximumPowerYesterday);}
+}
+
+void SentenceParserERR::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float errorCode;
+
+  // e.g. ERR<tab>0
+  ok &= parse_float(&errorCode, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->errorCode.set(errorCode);}
+}
+
+void SentenceParserCS::parse(
+    char* buffer, int term_offsets[], int num_terms,
+    std::map<String, SentenceParser*>& sentence_parsers) {
+  bool ok = true;
+  float stateOfOperation;
+
+  // e.g. CS<tab>3
+  ok &= parse_float(&stateOfOperation, buffer + term_offsets[1]);
+
+  if (ok) {vedirect_data->stateOfOperation.set(state[(int)stateOfOperation]);}
 }
 
 SentenceParser::SentenceParser(VEDirectData* vedirect_data) : vedirect_data{vedirect_data} {}

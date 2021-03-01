@@ -1,9 +1,11 @@
+#include <Arduino.h>
 #include "vedirect_helper.h"
 
 #include "sensesp_app.h"
 #include "signalk/signalk_output.h"
 
 #include "sensesp.h"
+#include "sensesp_app_builder.h"
 
 VEDirectInput::VEDirectInput(Stream* rx_stream)
     : Sensor() {
@@ -14,6 +16,13 @@ VEDirectInput::VEDirectInput(Stream* rx_stream)
   vedirect_parser_.add_sentence_parser(new SentenceParserPPV(&vedirect_data_));
   vedirect_parser_.add_sentence_parser(new SentenceParserI(&vedirect_data_));
   vedirect_parser_.add_sentence_parser(new SentenceParserIL(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserH19(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserH20(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserH21(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserH22(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserH23(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserERR(&vedirect_data_));
+  vedirect_parser_.add_sentence_parser(new SentenceParserCS(&vedirect_data_));
 
 }
 
@@ -26,6 +35,7 @@ void VEDirectInput::enable() {
   });
 }
 
+//SKMetadata* metadata = new SKMetadata("W", "Panel Power", "Panel Power", "Pnl Pow");
 
 VEDirectInput* setup_vedirect(Stream* rx_stream) {
   VEDirectInput* victronDevice = new VEDirectInput(rx_stream);
@@ -34,11 +44,31 @@ VEDirectInput* setup_vedirect(Stream* rx_stream) {
   victronDevice->vedirect_data_.panelVoltage.connect_to(
       new SKOutputNumber("electrical.solar.panel.voltage", ""));
   victronDevice->vedirect_data_.panelPower.connect_to(
-      new SKOutputNumber("electrical.solar.panel.power", ""));
+      new SKOutputNumber("electrical.solar.panel.power", "", 
+        new SKMetadata("W", "Panel Power", "Panel Power", "Pnl Pow")));
   victronDevice->vedirect_data_.batteryCurrent.connect_to(
       new SKOutputNumber("electrical.batteries.mainBattery.current", ""));
   victronDevice->vedirect_data_.loadCurrent.connect_to(
       new SKOutputNumber("electrical.batteries.loadCurrent.current", ""));
+  victronDevice->vedirect_data_.yieldTotal.connect_to(
+      new SKOutputNumber("electrical.solar.yieldTotal", "", 
+        new SKMetadata("kWh", "Yield Total", "Yield Total", "Yield Total")));
+  victronDevice->vedirect_data_.yieldToday.connect_to(
+      new SKOutputNumber("electrical.solar.charger1.yieldToday", "", 
+        new SKMetadata("kWh", "Yield Today", "Yield Today", "Yield Today")));
+  victronDevice->vedirect_data_.maximumPowerToday.connect_to(
+      new SKOutputNumber("electrical.solar.charger1.maximumPowerToday", "", 
+        new SKMetadata("W", "Maximum Power Today", "Maximum Power Today", "Max Power Today")));
+  victronDevice->vedirect_data_.yieldYesterday.connect_to(
+      new SKOutputNumber("electrical.solar.charger1.yieldYesterday", "", 
+        new SKMetadata("kWh", "Yield Yesterday", "Yield Yesterday", "Yield Yesterday")));
+  victronDevice->vedirect_data_.maximumPowerYesterday.connect_to(
+      new SKOutputNumber("electrical.solar.charger1.maximumPowerYesterday", "", 
+        new SKMetadata("W", "Maximum Power Yesterday", "Maximum Power Yesterday", "Max Power Yesterday")));
+  victronDevice->vedirect_data_.errorCode.connect_to(
+      new SKOutputNumber("electrical.solar.charger1.errorCode", ""));
+  victronDevice->vedirect_data_.stateOfOperation.connect_to(
+      new SKOutputString("electrical.solar.charger1.stateOfOperation", ""));
 
   return victronDevice;
 }

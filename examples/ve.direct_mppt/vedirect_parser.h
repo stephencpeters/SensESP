@@ -13,6 +13,13 @@ struct VEDirectData {
   ObservableValue<float> batteryCurrent;
   ObservableValue<float> loadCurrent;
   ObservableValue<float> loadOutputState;
+  ObservableValue<float> yieldTotal;
+  ObservableValue<float> yieldToday;
+  ObservableValue<float> maximumPowerToday;
+  ObservableValue<float> yieldYesterday;
+  ObservableValue<float> maximumPowerYesterday;
+  ObservableValue<float> errorCode;
+  ObservableValue<String> stateOfOperation;
 };
 
 class SentenceParser {
@@ -87,6 +94,90 @@ class SentenceParserIL : public SentenceParser {
   void parse(char* buffer, int term_offsets[], int num_terms,
              std::map<String, SentenceParser*>& sentence_parsers);
   const char* sentence() { return "IL"; }
+
+ private:
+};
+
+
+class SentenceParserH19 : public SentenceParser {
+ public:
+  SentenceParserH19(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "H19"; }
+
+ private:
+};
+
+
+class SentenceParserH20 : public SentenceParser {
+ public:
+  SentenceParserH20(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "H20"; }
+
+ private:
+};
+
+
+class SentenceParserH21 : public SentenceParser {
+ public:
+  SentenceParserH21(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "H21"; }
+
+ private:
+};
+
+
+class SentenceParserH22 : public SentenceParser {
+ public:
+  SentenceParserH22(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "H22"; }
+
+ private:
+};
+
+
+class SentenceParserH23 : public SentenceParser {
+ public:
+  SentenceParserH23(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "H23"; }
+
+ private:
+};
+
+
+class SentenceParserERR : public SentenceParser {
+ public:
+  SentenceParserERR(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "ERR"; }
+
+ private:
+};
+
+
+class SentenceParserCS : public SentenceParser {
+ public:
+  SentenceParserCS(VEDirectData* vedirect_data) : SentenceParser{vedirect_data} {}
+  void parse(char* buffer, int term_offsets[], int num_terms) override final {}
+  void parse(char* buffer, int term_offsets[], int num_terms,
+             std::map<String, SentenceParser*>& sentence_parsers);
+  const char* sentence() { return "CS"; }
 
  private:
 };

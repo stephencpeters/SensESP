@@ -170,7 +170,7 @@ void SentenceParserH19::parse(
   // e.g. H19<tab>1225
   ok &= parse_float(&yieldTotal, buffer + term_offsets[1]);
 
-  if (ok) {vedirect_data->yieldTotal.set(yieldTotal);}
+  if (ok) {vedirect_data->yieldTotal.set(yieldTotal / 100.);}
 }
 
 void SentenceParserH20::parse(
@@ -182,7 +182,7 @@ void SentenceParserH20::parse(
   // e.g. H20<tab>3
   ok &= parse_float(&yieldToday, buffer + term_offsets[1]);
 
-  if (ok) {vedirect_data->yieldToday.set(yieldToday);}
+  if (ok) {vedirect_data->yieldToday.set(yieldToday / 100.);}
 }
 
 void SentenceParserH21::parse(
@@ -206,7 +206,7 @@ void SentenceParserH22::parse(
   // e.g. H22<tab>6
   ok &= parse_float(&yieldYesterday, buffer + term_offsets[1]);
 
-  if (ok) {vedirect_data->yieldYesterday.set(yieldYesterday);}
+  if (ok) {vedirect_data->yieldYesterday.set(yieldYesterday / 100.);}
 }
 
 void SentenceParserH23::parse(

@@ -40,35 +40,35 @@ void VEDirectInput::enable() {
 VEDirectInput* setup_vedirect(Stream* rx_stream) {
   VEDirectInput* victronDevice = new VEDirectInput(rx_stream);
   victronDevice->vedirect_data_.batteryVoltage.connect_to(
-      new SKOutputNumber("electrical.batteries.mainBattery.voltage", ""));
+      new SKOutputNumber("electrical.batteries.mainBattery.voltage", "/ve.direct/batteryVoltagePath"));
   victronDevice->vedirect_data_.panelVoltage.connect_to(
-      new SKOutputNumber("electrical.solar.panel.voltage", ""));
+      new SKOutputNumber("electrical.solar.panel.voltage", "/ve.direct/panelVoltagePath"));
   victronDevice->vedirect_data_.panelPower.connect_to(
-      new SKOutputNumber("electrical.solar.panel.power", "", 
+      new SKOutputNumber("electrical.solar.panel.power", "/ve.direct/panelPowerPath", 
         new SKMetadata("W", "Panel Power", "Panel Power", "Pnl Pow")));
   victronDevice->vedirect_data_.batteryCurrent.connect_to(
-      new SKOutputNumber("electrical.batteries.mainBattery.current", ""));
+      new SKOutputNumber("electrical.batteries.mainBattery.current", "/ve.direct/chargeCurrentPath"));
   victronDevice->vedirect_data_.loadCurrent.connect_to(
-      new SKOutputNumber("electrical.batteries.loadCurrent.current", ""));
+      new SKOutputNumber("electrical.batteries.loadCurrent.current", "/ve.direct/loadCurrentPath"));
   victronDevice->vedirect_data_.yieldTotal.connect_to(
-      new SKOutputNumber("electrical.solar.yieldTotal", "", 
+      new SKOutputNumber("electrical.solar.yieldTotal", "/ve.direct/yieldTotalPath", 
         new SKMetadata("kWh", "Yield Total", "Yield Total", "Yield Total")));
   victronDevice->vedirect_data_.yieldToday.connect_to(
-      new SKOutputNumber("electrical.solar.charger1.yieldToday", "", 
+      new SKOutputNumber("electrical.solar.charger1.yieldToday", "/ve.direct/yieldTodayPath", 
         new SKMetadata("kWh", "Yield Today", "Yield Today", "Yield Today")));
   victronDevice->vedirect_data_.maximumPowerToday.connect_to(
-      new SKOutputNumber("electrical.solar.charger1.maximumPowerToday", "", 
+      new SKOutputNumber("electrical.solar.charger1.maximumPowerToday", "/ve.direct/maximumPowerTodayPath", 
         new SKMetadata("W", "Maximum Power Today", "Maximum Power Today", "Max Power Today")));
   victronDevice->vedirect_data_.yieldYesterday.connect_to(
-      new SKOutputNumber("electrical.solar.charger1.yieldYesterday", "", 
+      new SKOutputNumber("electrical.solar.charger1.yieldYesterday", "/ve.direct/yieldYesterdayPath", 
         new SKMetadata("kWh", "Yield Yesterday", "Yield Yesterday", "Yield Yesterday")));
   victronDevice->vedirect_data_.maximumPowerYesterday.connect_to(
-      new SKOutputNumber("electrical.solar.charger1.maximumPowerYesterday", "", 
+      new SKOutputNumber("electrical.solar.charger1.maximumPowerYesterday", "/ve.direct/maximumPowerYesterdayPath", 
         new SKMetadata("W", "Maximum Power Yesterday", "Maximum Power Yesterday", "Max Power Yesterday")));
   victronDevice->vedirect_data_.errorCode.connect_to(
-      new SKOutputNumber("electrical.solar.charger1.errorCode", ""));
+      new SKOutputNumber("electrical.solar.charger1.errorCode", "/ve.direct/errorCodePath"));
   victronDevice->vedirect_data_.stateOfOperation.connect_to(
-      new SKOutputString("electrical.solar.charger1.stateOfOperation", ""));
+      new SKOutputString("electrical.solar.charger1.stateOfOperation", "/ve.direct/stateOfOperationPath"));
 
   return victronDevice;
 }

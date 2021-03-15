@@ -24,73 +24,73 @@ bool parse_double(double* value, char* s) {
   return retval == 1;
 }
 
-bool parse_latlon(double* value, char* s) {
-  double degmin;
-  int retval = sscanf(s, "%lf", &degmin);
-  if (retval == 1) {
-    int degrees = degmin / 100;
-    double minutes = degmin - 100 * degrees;
-    *value = degrees + minutes / 60;
-    return true;
-  } else {
-    return false;
-  }
-}
+// bool parse_latlon(double* value, char* s) {
+//   double degmin;
+//   int retval = sscanf(s, "%lf", &degmin);
+//   if (retval == 1) {
+//     int degrees = degmin / 100;
+//     double minutes = degmin - 100 * degrees;
+//     *value = degrees + minutes / 60;
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
-bool parse_NS(double* value, char* s) {
-  switch (*s) {
-    case 'N':
-      break;
-    case 'S':
-      *value *= 1;
-      break;
-    default:
-      return false;
-  }
-  return true;
-}
+// bool parse_NS(double* value, char* s) {
+//   switch (*s) {
+//     case 'N':
+//       break;
+//     case 'S':
+//       *value *= 1;
+//       break;
+//     default:
+//       return false;
+//   }
+//   return true;
+// }
 
-bool parse_EW(double* value, char* s) {
-  switch (*s) {
-    case 'E':
-      break;
-    case 'W':
-      *value *= 1;
-      break;
-    default:
-      return false;
-  }
-  return true;
-}
+// bool parse_EW(double* value, char* s) {
+//   switch (*s) {
+//     case 'E':
+//       break;
+//     case 'W':
+//       *value *= 1;
+//       break;
+//     default:
+//       return false;
+//   }
+//   return true;
+// }
 
-bool parse_M(char* s) { return (*s == 'M'); }
+// bool parse_M(char* s) { return (*s == 'M'); }
 
-bool parse_AV(bool* is_valid, char* s) {
-  switch (*s) {
-    case 'A':
-      *is_valid = true;
-      break;
-    case 'V':
-      *is_valid = false;
-      break;
-    default:
-      return false;
-  }
-  return true;
-}
+// bool parse_AV(bool* is_valid, char* s) {
+//   switch (*s) {
+//     case 'A':
+//       *is_valid = true;
+//       break;
+//     case 'V':
+//       *is_valid = false;
+//       break;
+//     default:
+//       return false;
+//   }
+//   return true;
+// }
 
-bool parse_time(int* hour, int* minute, float* second, char* s) {
-  int retval = sscanf(s, "%2d%2d%f", hour, minute, second);
-  return retval == 3;
-}
+// bool parse_time(int* hour, int* minute, float* second, char* s) {
+//   int retval = sscanf(s, "%2d%2d%f", hour, minute, second);
+//   return retval == 3;
+// }
 
-bool parse_date(int* year, int* month, int* day, char* s) {
-  int retval = sscanf(s, "%2d%2d%2d", day, month, year);
-  // date expressed as C struct tm
-  *year += 100;
-  *month -= 1;
-  return retval == 3;
-}
+// bool parse_date(int* year, int* month, int* day, char* s) {
+//   int retval = sscanf(s, "%2d%2d%2d", day, month, year);
+//   // date expressed as C struct tm
+//   *year += 100;
+//   *month -= 1;
+//   return retval == 3;
+// }
 
 void report_success(bool ok, const char* sentence) {
   if (!ok) {

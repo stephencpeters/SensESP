@@ -20,6 +20,7 @@ struct VEDirectData {
   ObservableValue<float> maximumPowerYesterday;
   ObservableValue<float> errorCode;
   ObservableValue<String> stateOfOperation;
+  ObservableValue<String> chargerName;
 };
 
 class SentenceParser {

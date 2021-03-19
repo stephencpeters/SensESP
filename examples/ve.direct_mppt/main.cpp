@@ -27,11 +27,11 @@ ReactESP app([]() {
 //  The first 2 are connected to hardware UARTs
 //  The next 4 are software UARTs.
 //  Unknown if more could be defined.
-//  The default pins are 27, 16, 26, 17, 25, 4
+//  The default pins are 27, 16, 26, 17, 25, 33
 //
 //  Define hardware UARTs
 //  Use these first if you have up to two ve.direct MPPTs
-//  These are labeled 1 and 2 in the Signal K path names
+//  These are labeled 1, 2, 3 in the Signal K path names
 
   uint8_t pinA = 27;   // Reassign UART1 to pin 27
   HardwareSerial* serialA = &Serial1;
@@ -41,12 +41,13 @@ ReactESP app([]() {
   HardwareSerial* serialB = &Serial2;
   serialB->begin(19200, SERIAL_8N1, pinB, -1);
 
+  //Note that this UART defaults to the USB chip on many dev kits
+  uint8_t pinC = 26;  // Reassign UART0 to pin 26
+  HardwareSerial* serialC = &Serial;
+  serialC->begin(19200, SERIAL_8N1, pinC, -1);
+ 
 //  Define the rest of the serial ports in software
-//  These are labeled 3, 4, 5, 6 in the Signal K path names
-
-  uint8_t pinC = 26;  // Use software serial on pin 26
-  SoftwareSerial* serialC = new SoftwareSerial(pinC, -1, false);
-  serialC->begin(19200, SWSERIAL_8N1);
+//  These are labeled 4, 5, 6 in the Signal K path names
 
   uint8_t pinD = 17;  // Use software serial on pin 17
   SoftwareSerial* serialD = new SoftwareSerial(pinD, -1, false);
@@ -56,7 +57,7 @@ ReactESP app([]() {
   SoftwareSerial* serialE = new SoftwareSerial(pinE, -1, false);
   serialE->begin(19200, SWSERIAL_8N1);
 
-  uint8_t pinF = 4;  // Use software serial on pin 4
+  uint8_t pinF = 33;  // Use software serial on pin 33
   SoftwareSerial* serialF = new SoftwareSerial(pinF, -1, false);
   serialF->begin(19200, SWSERIAL_8N1);
 
@@ -71,6 +72,8 @@ ReactESP app([]() {
 
 
   auto* charger1 = setup_vedirect(serialA, 1);
+   // String("Davits").value(
+  //   new SKOutputString("electrical.solar.charger1.name", "/ve.direct.1/chargerNamePath"));
 
   auto* charger2 = setup_vedirect(serialB, 2);
 

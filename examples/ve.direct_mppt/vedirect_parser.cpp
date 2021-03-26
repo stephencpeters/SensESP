@@ -92,14 +92,14 @@ bool parse_double(double* value, char* s) {
 //   return retval == 3;
 // }
 
-void report_success(bool ok, const char* sentence) {
-  if (!ok) {
-    debugI("Failed to parse %s", sentence);
-    return;
-  } else {
-    debugD("Parsed sentence %s", sentence);
-  }
-}
+// void report_success(bool ok, const char* sentence) {
+//   if (!ok) {
+// //    debugI("Failed to parse %s", sentence);
+//     return;
+//   } else {
+// //    debugD("Parsed sentence %s", sentence);
+//   }
+// }
 
 void SentenceParserV::parse(
     char* buffer, int term_offsets[], int num_terms,
@@ -307,9 +307,9 @@ void VEDirectParser::state_in_term(char c) {
       buffer[cur_offset++] = 0;
       // call the relevant sentence parser
       if (sentence_parsers.find(buffer) == sentence_parsers.end()) {
-        debugD("Parser not found for sentence %s", buffer);
+//        debugD("Parser not found for sentence %s", buffer);
       } else {
-        debugD("Parser found for sentence %s", buffer);
+//        debugD("Parser found for sentence %s", buffer);
         sentence_parsers[buffer]->parse(buffer, term_offsets, cur_term + 1,
                                         sentence_parsers);
       }

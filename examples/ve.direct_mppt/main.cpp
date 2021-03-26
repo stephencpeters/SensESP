@@ -6,7 +6,7 @@
 
 ReactESP app([]() {
   SensESPAppBuilder builder;
-  sensesp_app = builder.set_standard_sensors(ALL) //or, IP_ADDRESS, UPTIME, NONE
+  sensesp_app = builder.set_standard_sensors(IP_ADDRESS) //or, IP_ADDRESS, UPTIME, NONE
                     ->get_app();
 
 #define SERIAL_DEBUG_DISABLED = True  // Also uncomment debug lines in parser and helper

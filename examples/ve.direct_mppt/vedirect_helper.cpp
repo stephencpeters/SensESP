@@ -69,19 +69,6 @@ VEDirectInput* setup_vedirect(Stream* rx_stream, uint8_t chargernumber) {
       new SKOutputNumber("electrical.solar.charger" + String(chargernumber) + ".errorCode", "/ve.direct." + String(chargernumber) + "/errorCodePath"));
   victronDevice->vedirect_data_.stateOfOperation.connect_to(
       new SKOutputString("electrical.solar.charger" + String(chargernumber) + ".stateOfOperation", "/ve.direct." + String(chargernumber) + "/stateOfOperationPath"));
-//
-//  The following config strings - I would like to populate with a string that will be reported
-//  to the /name path - and then can be displayed by the GUI.
-//  Examples might be "Port Bimini" or "Stern Arch"
-//
-//  victronDevice->vedirect_data_.chargerName.connect_to(
-//     new SKOutputString("electrical.solar.charger" + String(chargernumber) + ".name", "/ve.direct." + String(chargernumber) + "/chargerNamePath"));
-//  victronDevice->vedirect_data_.chargerName.connect_to(
-//      new SKOutputString("electrical.solar.charger" + String(chargernumber) + ".name", "/ve.direct." + String(chargernumber) + "/chargerNamePath"));
-
-
-//
-//
 
   return victronDevice;
 }

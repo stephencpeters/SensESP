@@ -309,10 +309,13 @@ void VEDirectParser::state_in_term(char c) {
       if (sentence_parsers.find(buffer) == sentence_parsers.end()) {
         debugD("Parser not found for sentence %s", buffer);
       } else {
+        debugD("Parser found for sentence %s", buffer);
         sentence_parsers[buffer]->parse(buffer, term_offsets, cur_term + 1,
                                         sentence_parsers);
       }
-      current_state = &VEDirectParser::state_start;
+      current_state = &VEDirectParser::state_in_term;
+      cur_offset = 0;
+      cur_term = 0;
       break;
     default:
       // read term characters
